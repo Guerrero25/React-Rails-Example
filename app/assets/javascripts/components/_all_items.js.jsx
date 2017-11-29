@@ -1,33 +1,31 @@
 class AllItems extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      items: []
-    }
+
+    this.onUpdate = this.onUpdate.bind(this)
   }
 
-  componentDidMount() {
-    fetch('/api/v1/items.json')
-    .then( response => response.json())
-    .then(items => {
-      this.setState({
-        items
-      })
-    })
+  handleDelete(id) {
+    this.props.handleDelete(id)
+  }
+
+  onUpdate(item) {
+    this.props.onUpdate(item);
   }
 
   render() {
-    let items = this.state.items.map(item => {
+    let items = this.props.items.map(item => {
       return (
-        <div key={item.id}>
-          <h3>{item.name}</h3>
-          <p>{item.description}</p>
-        </div>
+       <Item 
+        item={item}
+        handleDelete={this.handleDelete.bind(this, item.id)}
+        handleUpdate={this.onUpdate}
+       />
       )
     })
     
     return (
-      <div>
+      <div className="items-content" >
         {items}
       </div>
     )

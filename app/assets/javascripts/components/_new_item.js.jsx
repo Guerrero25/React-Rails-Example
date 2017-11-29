@@ -8,7 +8,7 @@ class NewItem extends React.Component {
 
     this.handleNameChange = this.handleNameChange.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleNameChange(e) {
@@ -25,31 +25,51 @@ class NewItem extends React.Component {
     })
   }
 
-  handleSubmit(e) {
+  handleClick(e) {
     e.preventDefault()
     let name = this.state.name
     let description = this.state.description
 
     fetch('/api/v1/items', {
       method: 'POST',
-      body: {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         item: {
           name: name,
           description: description
         }
+      })
+    }).then(response => {
+      if (response.status === 201) {
+        return response.json()
       }
-    }).then(respose => response.json())
-    .then(data => {
-      console.log(data)
+    }).then(item => {
+      this.props.handleSubmit(item)
+      this.setState({
+        name: '',
+        description: ''
+      })
     })
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} >
-        <input onChange={this.handleNameChange} placeholder = "Enter the name of the item" />
-        <input onChange={this.handleDescriptionChange} placeholder = "Enter a description" />
-        <input type="submit" value="Submit" />
+      <form onSubmit={this.handleClick} >
+        <div className="form-items">
+          <input
+            className="input-items"
+            onChange={this.handleNameChange}
+            placeholder = "Enter the name of the item"
+            value={this.state.name} />
+          <input
+            className="input-items"
+            onChange={this.handleDescriptionChange}
+            placeholder = "Enter a description"
+            value={this.state.description} />
+          <input className="input-items" type="submit" value="Submit" />
+        </div>
       </form>
     )
   }

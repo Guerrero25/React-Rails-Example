@@ -1,3 +1,72 @@
 // Place all the styles related to the SiteController controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+}
+
+@mixin display-flex($direction, $justify, $wrap) {
+    display: flex;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    justify-content: $justify;
+}
+
+.form-items {
+    border: 1px solid lightcoral;
+    margin: 0;
+    padding: 1em;
+    width: 300px;
+}
+
+.input-items {
+    border: 1px solid lightgray;
+    border-radius: 1em;
+    line-height: 2em;
+    margin-bottom: 1.5em;
+    outline: none;
+    padding: 0 5px;
+    width: 100%;
+}
+
+.input-items[type=submit] {
+    background-color: lightcoral;
+    color: #fff;
+    cursor: pointer;
+}
+
+.flex-row {
+    @include display-flex($direction: row, $justify: space-around , $wrap: wrap );
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.items-content {
+    @include display-flex($direction: row, $justify: space-around, $wrap: wrap);
+    width: 600px;
+}
+
+.item {
+    border: 1px solid lightcoral;
+    margin-bottom: 1em;
+    padding: 1em;
+    width: 30%;
+}
+
+.item input {
+    border: 1px solid lightgray;
+    border-radius: .75em;
+    line-height: 1.5em;
+    margin-bottom: 1em;
+    outline: none;
+    padding: 0 8px;
+    width: 100%;
+}
+
+.item button {
+    margin-right: 2px;
+}
